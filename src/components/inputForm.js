@@ -1,8 +1,8 @@
 import React,{ Component } from 'react';
 
 export default class inputForm extends Component {
+  
   render(){
-    
     return (
       <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <div className="panel panel-primary">
@@ -16,7 +16,6 @@ export default class inputForm extends Component {
                 <div className="form-group">
                     <label >Name</label>
                     <input type="text" className="form-control" />
-                    
                     <label >Status</label>
                     <select name="" className="form-control">
                     <option value="">Active</option>
