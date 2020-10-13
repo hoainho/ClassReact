@@ -6,7 +6,7 @@ export default class TaskForm extends Component {
     return (
         <div className="row mt-5 mb-5">
             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 search-control">
-                <input type="search" name=""className="form-control mr-5" value="" placeholder="Enter Your KeyWord..."/>
+                <input type="search" className="form-control mr-5" placeholder="Enter Your KeyWord..."/>
                 <button type="button" className="btn btn-primary" > Search </button>
             </div>
             <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">

@@ -4,7 +4,7 @@ export default class inputForm extends Component {
   
   render(){
     return (
-      <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+     
         <div className="panel panel-primary">
             <div className="panel-heading ">
                 <h3 className="panel-title w-100">input Form
@@ -29,8 +29,7 @@ export default class inputForm extends Component {
                 
             </div>
         </div>
-                    
-        </div>
+        
     );
   }
 }
