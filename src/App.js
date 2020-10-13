@@ -1,50 +1,73 @@
 import React,{ Component } from 'react';
 import './App.css';
+import nextId from 'react-id-generator';
 import InputForm from './components/inputForm';
-import TaskForm from './components/TaskForm';
+import Control from './components/Control';
+import TaskList from './components/TaskList';
 export default class App extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
-      task : []
+      task : [],
+      isDisplayForm : true
     }
   }
-  onHandleChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
+ 
+//   GenerateData = ()=> {
+//     var task = [
+//       {
+//         id : this.GenerateID,
+//         name : 'React',
+//         status: true,
+//       },
+//       {
+//         id : this.GenerateID,
+//         name : 'Angular',
+//         status: false,
+//       },
+//       {
+//         id : this.GenerateID,
+//         name : 'Html',
+//         status: true,
+//       }
+//     ];
+//     this.setState({
+//       task
+//     });
+//     localStorage.setItem('task', JSON.stringify(task));
+// }
+  componentWillMount() {
+  if(localStorage && localStorage.getItem('task')){
+    var task = JSON.parse(localStorage.getItem('task'));
     this.setState({
-      [name] : value
+      task : task
     })
-    
-  }
-  GenerateData = ()=> {
-    var task = [
-      {
-        id : 1,
-        name : 'React',
-        status: true,
-      },
-      {
-        id : 2,
-        name : 'Angular',
-        status: false,
-      },
-      {
-        id : 3,
-        name : 'Html',
-        status: true,
-      }
-    ];
-    this.setState({
-      task
-    })
+ }
 }
-onDisplayForm = () => {
 
-}
+  onToggleForm = () => {
+    this.setState({
+      isDisplayForm :true
+    })
+  } 
+  onCloseForm = () => {
+    this.setState({
+      isDisplayForm : false
+    })
+  }
+  onSubmit = (data) => {
+    var { task } = this.state
+    data.id = nextId();
+    task.push(data);
+    this.setState({
+      task 
+    })
+    localStorage.setItem('task', JSON.stringify(task))
+
+  }
   render(){
-    
+    var { task,isDisplayForm } = this.state
     return (
       <div className="App">
           <div className="container">
@@ -52,12 +75,13 @@ onDisplayForm = () => {
               <hr/><h1> MANAGEMENT TASK</h1><hr/>
             </div>
             <div className="row">
-              <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <InputForm /> 
+              <div className={ isDisplayForm === true ? "col-xs-4 col-sm-4 col-md-4 col-lg-4" : "display-none"}>
+                <InputForm  onCloseForm={ this.onCloseForm }
+                            onSubmit = { this.onSubmit }
+                /> 
               </div>
-              <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                <TaskForm  />
-                <button type="button" className="btn btn-primary mr-5" >
+              <div className={ isDisplayForm === true ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
+                <button type="button" className="btn btn-primary mr-5"  onClick={ this.onToggleForm }>
                     <span className="fa fa-plus-square mr-5"/>
                       Add Task
                 </button>
@@ -65,6 +89,10 @@ onDisplayForm = () => {
                   <span className="fa fa-plus-square mr-5" />
                       Generate Data
                 </button>
+                <Control />
+                <div className="row">
+                    <TaskList items ={ task }/>
+                </div>
               </div>
                   
             </div>

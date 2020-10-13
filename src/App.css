@@ -32,3 +32,6 @@
   position: relative;
   left: 70%;
 }
+.display-none{
+  display: none;
+}
