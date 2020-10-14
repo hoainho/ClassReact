@@ -10,45 +10,23 @@ export default class App extends Component {
     super(props);
     this.state = {
       task : [],
-      isDisplayForm : true
+      isDisplayForm : true,
+      isFixForm : null
     }
   }
- 
-//   GenerateData = ()=> {
-//     var task = [
-//       {
-//         id : this.GenerateID,
-//         name : 'React',
-//         status: true,
-//       },
-//       {
-//         id : this.GenerateID,
-//         name : 'Angular',
-//         status: false,
-//       },
-//       {
-//         id : this.GenerateID,
-//         name : 'Html',
-//         status: true,
-//       }
-//     ];
-//     this.setState({
-//       task
-//     });
-//     localStorage.setItem('task', JSON.stringify(task));
-// }
   componentWillMount() {
   if(localStorage && localStorage.getItem('task')){
     var task = JSON.parse(localStorage.getItem('task'));
     this.setState({
-      task : task
+      task
     })
  }
 }
 
   onToggleForm = () => {
     this.setState({
-      isDisplayForm :true
+      isDisplayForm :true,
+      isFixForm : null
     })
   } 
   onCloseForm = () => {
@@ -58,16 +36,56 @@ export default class App extends Component {
   }
   onSubmit = (data) => {
     var { task } = this.state
-    data.id = nextId();
-    task.push(data);
+    if ( task.id === '' ){
+      data.id = nextId();
+      task.forEach((task) => {
+        if(task.id === data.id){
+          data.id = nextId();
+        }
+        });
+      task.push(data);
+    }else{
+        var index = data.indexOf(data.id);
+        task[index] = data
+      }
+    this.setState({
+      task ,
+      isFixForm : null
+    })
+    localStorage.setItem('task', JSON.stringify(task))
+  }
+  onUpdate = (id) =>{
+    var { task } = this.state
+    task[id].status = !task[id].status
     this.setState({
       task 
     })
-    localStorage.setItem('task', JSON.stringify(task))
-
+    localStorage.setItem('task',JSON.stringify(task))
+  }
+  onDelete = (id) =>{
+    var { task } = this.state
+    task.splice(id,1);
+    this.setState({
+      task 
+    })
+    localStorage.setItem('task',JSON.stringify(task))
+  }
+  onFix = (id) =>{
+    var {task,onFixForm} = this.state
+    this.onToggleForm();
+    onFixForm = task[id];
+    this.setState({
+      onFixForm
+    })
+    console.log(onFixForm);
   }
   render(){
-    var { task,isDisplayForm } = this.state
+    var { task,isDisplayForm,onFixForm } = this.state
+    var elmInputForm = isDisplayForm? <InputForm  onCloseForm={ this.onCloseForm }
+                                                  onSubmit = { this.onSubmit }
+                                                  onFill = { onFixForm }
+                                                  />  
+                                    : ''
     return (
       <div className="App">
           <div className="container">
@@ -76,22 +94,16 @@ export default class App extends Component {
             </div>
             <div className="row">
               <div className={ isDisplayForm === true ? "col-xs-4 col-sm-4 col-md-4 col-lg-4" : "display-none"}>
-                <InputForm  onCloseForm={ this.onCloseForm }
-                            onSubmit = { this.onSubmit }
-                /> 
+                {elmInputForm}
               </div>
               <div className={ isDisplayForm === true ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
                 <button type="button" className="btn btn-primary mr-5"  onClick={ this.onToggleForm }>
                     <span className="fa fa-plus-square mr-5"/>
                       Add Task
                 </button>
-                <button type="button" className="btn btn-info" onClick={ this.GenerateData }>
-                  <span className="fa fa-plus-square mr-5" />
-                      Generate Data
-                </button>
                 <Control />
                 <div className="row">
-                    <TaskList items ={ task }/>
+                    <TaskList items ={ task } onUpdate = { this.onUpdate } onDelete = { this.onDelete } onFix = { this.onFix } findIndex = { this.findIndex }/>
                 </div>
               </div>
                   

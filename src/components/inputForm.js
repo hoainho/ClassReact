@@ -3,10 +3,22 @@ export default class inputForm extends Component {
     constructor(props) {
         super(props);
         this.state =  {
+            id : '',
             name : '',
             status : false
             }
     }
+    
+    componentWillMount() {
+      if(this.props.onFill){
+        this.setState({
+          id : this.props.onFill.id,
+          name : this.props.onFill.name,
+          status : this.props.onFill.status
+        })
+      }
+    }
+    
     onHandleChange =(event) => {
         var target = event.target;
         var value = target.value;
@@ -18,16 +30,28 @@ export default class inputForm extends Component {
           [name] : value
         })  
       }
+    onCloseForm =() => {
+      this.props.onCloseForm();
+    }
+    onClear = () => {
+      this.setState({
+        name : '',
+        status : false
+      })
+    }
     onSubmit = (event) => {
-        event.preventDefault();   
+        event.preventDefault();
         this.props.onSubmit(this.state); 
+        this.onClear();
+        this.onCloseForm();
     }
   render(){
     var { onCloseForm } =  this.props
+    var { id } = this.state
     return (
         <div className="panel panel-primary">
             <div className="panel-heading ">
-                <h3 className="panel-title w-100">input Form
+                <h3 className="panel-title w-100">{id === '' ? "input Form" : "Update Form"}
                     <span className="far fa-times-circle button-space" onClick={ onCloseForm }></span>
                 </h3>
             </div>
@@ -41,9 +65,8 @@ export default class inputForm extends Component {
                         <option value={ true }>Active</option>
                         <option value={ false }>InActive</option>
                     </select>
-                </div>
-                
-                <button type="reset" className="btn btn-primary mr-5">Reset</button>
+                </div>  
+                <button type="button" className="btn btn-primary mr-5" onClick = { this.onClear } >Reset</button>
                 <button type="submit" className="btn btn-primary" onClick={ this.onSubmit }>Submit</button>
                 </form>
                 

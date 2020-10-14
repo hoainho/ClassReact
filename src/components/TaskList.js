@@ -4,7 +4,12 @@ export default class TaskList extends Component {
   render(){
       var { items } = this.props
       var elmTask = items.map( (item,index) => {
-       return <TaskItem key={ item.id } index={ index } item= { item }/>
+       return <TaskItem key={ item.id } 
+                        index={ index } 
+                        item= { item } 
+                        onUpdate = { this.props.onUpdate } 
+                        onDelete = { this.props.onDelete }
+                        onFix = { this.props.onFix }/>
       })
     return (
         <div className="panel panel-primary">
