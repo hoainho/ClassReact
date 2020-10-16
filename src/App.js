@@ -1,4 +1,5 @@
 import React,{ Component } from 'react';
+import _ from 'lodash';
 import './App.css';
 import nextId from 'react-id-generator';
 import InputForm from './components/inputForm';
@@ -10,7 +11,7 @@ export default class App extends Component {
     super(props);
     this.state = {
       task : [],
-      isDisplayForm : true,
+      isDisplayForm : false,
       isFixForm : null
     }
   }
@@ -36,17 +37,17 @@ export default class App extends Component {
   }
   onSubmit = (data) => {
     var { task } = this.state
-    if ( task.id === '' ){
-      data.id = nextId();
-      task.forEach((task) => {
-        if(task.id === data.id){
-          data.id = nextId();
-        }
-        });
-      task.push(data);
-    }else{
-        var index = data.indexOf(data.id);
-        task[index] = data
+      if ( data.id === '' ){
+        data.id = nextId();
+        task.forEach((task) => {
+          if(task.id === data.id){
+            data.id = nextId();
+          }
+          });
+        task.push(data);
+      }else{
+          var index = _.findIndex(task,data.id);
+          task[index] = data   
       }
     this.setState({
       task ,
@@ -70,22 +71,24 @@ export default class App extends Component {
     })
     localStorage.setItem('task',JSON.stringify(task))
   }
-  onFix = (id) =>{
-    var {task,onFixForm} = this.state
-    this.onToggleForm();
-    onFixForm = task[id];
+  onFix = (data) =>{
+    var { task } = this.state
+    var index = _.findIndex(task,data);
+    console.log(index);
+    var onFixForm = task[index];
+    console.log(onFixForm);
     this.setState({
       onFixForm
     })
-    console.log(onFixForm);
+    this.onToggleForm();
   }
   render(){
-    var { task,isDisplayForm,onFixForm } = this.state
-    var elmInputForm = isDisplayForm? <InputForm  onCloseForm={ this.onCloseForm }
-                                                  onSubmit = { this.onSubmit }
-                                                  onFill = { onFixForm }
+    var { task, isDisplayForm, onFixForm } = this.state
+    var elmInputForm = isDisplayForm  ? <InputForm  onCloseForm={ this.onCloseForm }
+                                                    onSubmited = { this.onSubmit }
+                                                    onFill = { onFixForm }
                                                   />  
-                                    : ''
+                                      : ''
     return (
       <div className="App">
           <div className="container">
@@ -103,7 +106,7 @@ export default class App extends Component {
                 </button>
                 <Control />
                 <div className="row">
-                    <TaskList items ={ task } onUpdate = { this.onUpdate } onDelete = { this.onDelete } onFix = { this.onFix } findIndex = { this.findIndex }/>
+                    <TaskList items ={ task } onUpdate = { this.onUpdate } onDelete = { this.onDelete } onFix = { this.onFix } />
                 </div>
               </div>
                   

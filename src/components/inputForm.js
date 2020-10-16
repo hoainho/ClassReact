@@ -41,7 +41,7 @@ export default class inputForm extends Component {
     }
     onSubmit = (event) => {
         event.preventDefault();
-        this.props.onSubmit(this.state); 
+        this.props.onSubmited(this.state);
         this.onClear();
         this.onCloseForm();
     }
@@ -61,7 +61,7 @@ export default class inputForm extends Component {
                     <label >Name</label>
                     <input type="text" className="form-control" value={ this.state.name } name="name" onChange={ this.onHandleChange }/>
                     <label >Status</label>
-                    <select value={ this.state.status   } name="status" className="form-control" onChange={ this.onHandleChange }>
+                    <select value={ this.state.status } name="status" className="form-control" onChange={ this.onHandleChange }>
                         <option value={ true }>Active</option>
                         <option value={ false }>InActive</option>
                     </select>
