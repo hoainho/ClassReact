@@ -12,27 +12,31 @@ export default class App extends Component {
     this.state = {
       task : [],
       isDisplayForm : false,
-      isFixForm : null
+      taskEditting : null,
+      filter : {
+        name : '',
+        status : -1
+      }
     }
   }
   componentWillMount() {
   if(localStorage && localStorage.getItem('task')){
     var task = JSON.parse(localStorage.getItem('task'));
     this.setState({
-      task
+      ...this.state,
+      task,
     })
  }
 }
-
   onToggleForm = () => {
     this.setState({
       isDisplayForm :true,
-      isFixForm : null
     })
   } 
   onCloseForm = () => {
     this.setState({
-      isDisplayForm : false
+      isDisplayForm : false,
+      taskEditting : null
     })
   }
   onSubmit = (data) => {
@@ -44,51 +48,78 @@ export default class App extends Component {
             data.id = nextId();
           }
           });
-        task.push(data);
+         task.push(data)
       }else{
-          var index = _.findIndex(task,data.id);
-          task[index] = data   
+          let index = _.findIndex(task, function(task){ return task.id === data.id});
+          task[index] = data
       }
-    this.setState({
-      task ,
-      isFixForm : null
-    })
-    localStorage.setItem('task', JSON.stringify(task))
+      this.setState({
+        ...this.state,
+        task,
+      })
+      localStorage.setItem('task',JSON.stringify(task));
   }
   onUpdate = (id) =>{
     var { task } = this.state
     task[id].status = !task[id].status
     this.setState({
-      task 
+      ...this.state,
+      task
     })
     localStorage.setItem('task',JSON.stringify(task))
   }
   onDelete = (id) =>{
     var { task } = this.state
-    task.splice(id,1);
+    var index = _.findIndex(task ,function(item){ return item.id === id})
+    task.splice(index,1);
     this.setState({
-      task 
+      task  
     })
     localStorage.setItem('task',JSON.stringify(task))
   }
   onFix = (data) =>{
     var { task } = this.state
-    var index = _.findIndex(task,data);
-    console.log(index);
-    var onFixForm = task[index];
-    console.log(onFixForm);
+    var index = _.findIndex(task , function(task) { return task.id === data.id; }); //find Index
+    var taskEditting = task[index];
     this.setState({
-      onFixForm
+      ...this.state,
+      taskEditting,
     })
     this.onToggleForm();
   }
+  onFilter = (filterName,filterStatus) => {
+    filterStatus = parseInt(filterStatus,10)
+    console.log(filterName, '-' , filterStatus);
+    this.setState({
+      filter : {
+        name : filterName.toLowerCase(),
+        status : filterStatus
+      }
+    })
+  }
   render(){
-    var { task, isDisplayForm, onFixForm } = this.state
+    var { task, isDisplayForm, taskEditting ,filter} = this.state
+    if(filter){
+      if(filter.name){
+         task = task.filter( (item) => {
+           console.log(item.name.toLowerCase().indexOf(filter.name));
+          return item.name.toLowerCase().indexOf(filter.name) !== -1;
+        });
+      }
+        task = task.filter( (item) => {
+          console.log(item);
+          if (filter.status === 0) { return item }
+          else {
+            return item.status === ( filter.status === 1 ? true : false )
+          }
+        })
+    }
     var elmInputForm = isDisplayForm  ? <InputForm  onCloseForm={ this.onCloseForm }
-                                                    onSubmited = { this.onSubmit }
-                                                    onFill = { onFixForm }
+                                                    onSubmit = { this.onSubmit }
+                                                    onFill = { taskEditting }
                                                   />  
                                       : ''
+    
     return (
       <div className="App">
           <div className="container">
@@ -100,13 +131,13 @@ export default class App extends Component {
                 {elmInputForm}
               </div>
               <div className={ isDisplayForm === true ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
-                <button type="button" className="btn btn-primary mr-5"  onClick={ this.onToggleForm }>
+                <button type="button" className="btn btn-primary mr-5"  onClick={ this.onToggleForm}>
                     <span className="fa fa-plus-square mr-5"/>
                       Add Task
                 </button>
                 <Control />
                 <div className="row">
-                    <TaskList items ={ task } onUpdate = { this.onUpdate } onDelete = { this.onDelete } onFix = { this.onFix } />
+                    <TaskList items ={ task } onUpdate = { this.onUpdate } onDelete = { this.onDelete } onFix = { this.onFix } onFilter = { this.onFilter }/>
                 </div>
               </div>
                   

@@ -41,7 +41,7 @@ export default class inputForm extends Component {
     }
     onSubmit = (event) => {
         event.preventDefault();
-        this.props.onSubmited(this.state);
+        this.props.onSubmit(this.state);
         this.onClear();
         this.onCloseForm();
     }
