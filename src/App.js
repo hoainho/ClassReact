@@ -15,8 +15,9 @@ export default class App extends Component {
       taskEditting : null,
       filter : {
         name : '',
-        status : -1
-      }
+        status : 0
+      },
+      keyWord : ''
     }
   }
   componentWillMount() {
@@ -89,7 +90,6 @@ export default class App extends Component {
   }
   onFilter = (filterName,filterStatus) => {
     filterStatus = parseInt(filterStatus,10)
-    console.log(filterName, '-' , filterStatus);
     this.setState({
       filter : {
         name : filterName.toLowerCase(),
@@ -97,22 +97,33 @@ export default class App extends Component {
       }
     })
   }
+  onSearch = (data) => {
+    console.log(data);
+    this.setState({
+      keyWord :data.toLowerCase(),
+    })
+  }
   render(){
-    var { task, isDisplayForm, taskEditting ,filter} = this.state
+    var { task, isDisplayForm, taskEditting ,filter, keyWord} = this.state
     if(filter){
       if(filter.name){
          task = task.filter( (item) => {
-           console.log(item.name.toLowerCase().indexOf(filter.name));
           return item.name.toLowerCase().indexOf(filter.name) !== -1;
         });
       }
         task = task.filter( (item) => {
-          console.log(item);
           if (filter.status === 0) { return item }
           else {
             return item.status === ( filter.status === 1 ? true : false )
           }
         })
+    }
+    if(keyWord){
+      console.log(keyWord);
+      task = task.filter((item) => {
+        console.log(item.name.toLowerCase().indexOf(keyWord));
+        return item.name.toLowerCase().indexOf(keyWord) !== -1
+      })
     }
     var elmInputForm = isDisplayForm  ? <InputForm  onCloseForm={ this.onCloseForm }
                                                     onSubmit = { this.onSubmit }
@@ -135,7 +146,7 @@ export default class App extends Component {
                     <span className="fa fa-plus-square mr-5"/>
                       Add Task
                 </button>
-                <Control />
+                <Control onSearch = {this.onSearch} />
                 <div className="row">
                     <TaskList items ={ task } onUpdate = { this.onUpdate } onDelete = { this.onDelete } onFix = { this.onFix } onFilter = { this.onFilter }/>
                 </div>

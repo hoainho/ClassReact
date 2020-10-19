@@ -5,7 +5,7 @@ export default class TaskList extends Component {
         super(props);
         this.state = {
             filterName : '',
-            filterStatus : -1
+            filterStatus : 0
         }
     }
     onHandleChange = (event) =>{
