@@ -2,7 +2,7 @@ import React,{ Component } from 'react';
 
 export default class TaskItem extends Component {
   onUpdate = () =>{
-    this.props.onUpdate(this.props.index);
+    this.props.onUpdate(this.props.item.id);
   }
   onDelete = () =>{
     this.props.onDelete(this.props.item.id);

@@ -64,7 +64,10 @@ export default class App extends Component {
   }
   onUpdate = (id) =>{
     var { task } = this.state
-    task[id].status = !task[id].status
+    var index = _.findIndex(task, (task)=> {
+      return task.id === id
+    })
+    task[index].status = !task[index].status
     this.setState({
       ...this.state,
       task
