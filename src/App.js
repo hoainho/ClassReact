@@ -18,10 +18,8 @@ export default class App extends Component {
         status : 0
       },
       keyWord : '',
-      sort  : {
-        by : '',
-        value : true
-      }
+      sortBy : 'name',
+      sortValue : 1
     }
   }
   componentWillMount() {
@@ -107,11 +105,14 @@ export default class App extends Component {
       keyWord :data.toLowerCase(),
     })
   }
-  onSort = (name,value) => {
-    console.log(name + "-" + value);
+  onSort = (sortBy,sortValue) => {
+    this.setState({
+      sortBy  :sortBy,
+      sortValue : sortValue
+    })
   }
   render(){
-    var { task, isDisplayForm, taskEditting ,filter, keyWord } = this.state
+    var { task, isDisplayForm, taskEditting ,filter, keyWord, sortBy,sortValue} = this.state
     if(filter){
       if(filter.name){
          task = task.filter( (item) => {
@@ -132,12 +133,25 @@ export default class App extends Component {
         return item.name.toLowerCase().indexOf(keyWord) !== -1
       })
     }
+    if (sortBy === 'name') {
+        task.sort((prev,after) => {
+          if( prev.name > after.name ) { return sortValue }
+          else if( prev.name < after.name ) { return -sortValue }
+          else return 0 
+        })
+    }else{
+        task.sort((prev,after) => {
+          if( prev.status === true ) { return -sortValue }
+          else{ return sortValue }
+        })
+    }
+    console.log(task);
     var elmInputForm = isDisplayForm  ? <InputForm  onCloseForm={ this.onCloseForm }
                                                     onSubmit = { this.onSubmit }
                                                     onFill = { taskEditting }
                                                   />  
                                       : ''
-    
+      
     return (
       <div className="App">
           <div className="container">
@@ -153,7 +167,7 @@ export default class App extends Component {
                     <span className="fa fa-plus-square mr-5"/>
                       Add Task
                 </button>
-                <Control onSearch = {this.onSearch} onSort = { this.onSort }/>
+                <Control onSearch = {this.onSearch} onSort = { this.onSort } sortBy = { sortBy } sortValue ={ sortValue }/>
                 <div className="row">
                     <TaskList items ={ task } onUpdate = { this.onUpdate } onDelete = { this.onDelete } onFix = { this.onFix } onFilter = { this.onFilter }/>
                 </div>
