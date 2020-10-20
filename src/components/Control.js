@@ -5,7 +5,11 @@ export default class TaskForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            keyWord : ''
+            keyWord : '',
+            sort : {
+                by : 'name',
+                value: true
+            }
         }
     }
     onHandleChange = (event) => {
@@ -19,8 +23,18 @@ export default class TaskForm extends Component {
     onSearch = () => {
         this.props.onSearch(this.state.keyWord)
     }
+    onSort = (sortBy,sortValue) => {
+        this.setState({
+            sort : {
+                by : sortBy,
+                value: sortValue
+            }
+        })
+        // this.props.onSort(sortBy,sortValue);
+        console.log(this.state);
+    }
   render(){
-      var {keyWord} = this.state
+      var {keyWord,sort} = this.state
     return (
         <div className="row mt-5 mb-5">
             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 search-control">
@@ -33,11 +47,14 @@ export default class TaskForm extends Component {
                     Dropdown
                     <span className="caret ml-5"></span>
                     </button>
-                    <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="/">A {"->"} Z</a></li>
-                    <li><a href="/">Z {"->"} A</a></li>
-                    <li className="divider"></li>
-                    <li><a href="/">Something else here</a></li>
+                    <ul className="dropdown-menu">
+                        <li className="text-center"  onClick={ ()=> this.onSort('name', true) }><span  className={sort.by === 'name' && sort.value === true ? "sort-selected" : ""} >A {"->"} Z</span></li>
+                        <li className="text-center" onClick={ ()=> this.onSort('name',false) }><span  className={sort.by === 'name' && sort.value === false ? "sort-selected" : ""}>Z {"->"} A</span></li>
+                        <li className="divider"></li>
+                        <li className="text-center"  onClick={ ()=> this.onSort('status', true) }><span  className={sort.by === 'status' && sort.value === true? "sort-selected" : ""}>Active</span></li>
+                        <li className="text-center" onClick={ ()=> this.onSort('status',false) }><span  className={sort.by === 'status' && sort.value === false? "sort-selected" : ""}>InActive</span></li>
+                        <li className="divider"></li>
+                        <li className="text-center"><span  >Something else here</span></li>
                     </ul>
                 </div>
             </div>

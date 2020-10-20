@@ -17,7 +17,11 @@ export default class App extends Component {
         name : '',
         status : 0
       },
-      keyWord : ''
+      keyWord : '',
+      sort  : {
+        by : '',
+        value : true
+      }
     }
   }
   componentWillMount() {
@@ -103,8 +107,11 @@ export default class App extends Component {
       keyWord :data.toLowerCase(),
     })
   }
+  onSort = (name,value) => {
+    console.log(name + "-" + value);
+  }
   render(){
-    var { task, isDisplayForm, taskEditting ,filter, keyWord} = this.state
+    var { task, isDisplayForm, taskEditting ,filter, keyWord } = this.state
     if(filter){
       if(filter.name){
          task = task.filter( (item) => {
@@ -146,7 +153,7 @@ export default class App extends Component {
                     <span className="fa fa-plus-square mr-5"/>
                       Add Task
                 </button>
-                <Control onSearch = {this.onSearch} />
+                <Control onSearch = {this.onSearch} onSort = { this.onSort }/>
                 <div className="row">
                     <TaskList items ={ task } onUpdate = { this.onUpdate } onDelete = { this.onDelete } onFix = { this.onFix } onFilter = { this.onFilter }/>
                 </div>
