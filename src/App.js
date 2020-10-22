@@ -5,6 +5,7 @@ import nextId from 'react-id-generator';
 import InputForm from './components/inputForm';
 import Control from './components/Control';
 import TaskList from './components/TaskList';
+import redux from './redux/index';
 export default class App extends Component {
   
   constructor(props) {
@@ -148,7 +149,6 @@ export default class App extends Component {
           else{ return sortValue }
         })
     }
-    console.log(task);
     var elmInputForm = isDisplayForm  ? <InputForm  onCloseForm={ this.onCloseForm }
                                                     onSubmit = { this.onSubmit }
                                                     onFill = { taskEditting }
