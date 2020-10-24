@@ -35,8 +35,5 @@ var sort = {
         value : -1
     }
 }
-console.log('Default : ', store.getState());
 store.dispatch(status);
-console.log('TOOGLE_STATUS : ', store.getState());
 store.dispatch(sort);
-console.log('TOGGLE_SORT :',store.getState());
