@@ -5,7 +5,6 @@ import nextId from 'react-id-generator';
 import InputForm from './components/inputForm';
 import Control from './components/Control';
 import TaskList from './components/TaskList';
-import redux from './redux/index';
 export default class App extends Component {
   
   constructor(props) {
@@ -172,7 +171,7 @@ export default class App extends Component {
                 </button>
                 <Control onSearch = {this.onSearch} onSort = { this.onSort } sortBy = { sortBy } sortValue ={ sortValue }/>
                 <div className="row">
-                    <TaskList items ={ task } onUpdate = { this.onUpdate } onDelete = { this.onDelete } onFix = { this.onFix } onFilter = { this.onFilter }/>
+                    <TaskList onUpdate = { this.onUpdate } onDelete = { this.onDelete } onFix = { this.onFix } onFilter = { this.onFilter }/>
                 </div>
               </div>
                   
