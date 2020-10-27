@@ -13,7 +13,8 @@
     "react-id-generator": "^3.0.1",
     "react-redux": "^7.2.1",
     "react-scripts": "3.4.3",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "shortid": "^2.2.16"
   },
   "scripts": {
     "start": "react-scripts start",
