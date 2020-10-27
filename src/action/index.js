@@ -4,9 +4,9 @@ export const status = () => {
         type : types.TOGGLE_STATUS
     }
 }
-export const sort = (sort) => {
+export const addTask = (task) => {
     return {
-        type : types.TOGGLE_SORT,
-        sort
+        type : types.ADD_TASK,
+        task
     }
 }

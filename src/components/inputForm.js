@@ -1,5 +1,8 @@
 import React,{ Component } from 'react';
-export default class inputForm extends Component {
+import { connect } from 'react-redux'
+import * as actions from '../action/index';
+
+ class inputForm extends Component {
     constructor(props) {
         super(props);
         this.state =  {
@@ -41,7 +44,7 @@ export default class inputForm extends Component {
     }
     onSubmit = (event) => {
         event.preventDefault();
-        this.props.onSubmit(this.state);
+        this.props.addTask(this.state);
         this.onClear();
         this.onCloseForm();
     }
@@ -77,4 +80,17 @@ export default class inputForm extends Component {
   }
 }
 
-
+const getState = state => {
+  return {
+    
+  }
+}
+const getAction = ( dispatch,props ) => {
+  return {
+    addTask : (task) => {
+        dispatch(actions.addTask(task))
+      
+    }
+  }
+}
+export default connect(getState,getAction)(inputForm);

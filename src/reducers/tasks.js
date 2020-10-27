@@ -1,11 +1,22 @@
 import * as types from '../contants/index';
+import nextId from 'react-id-generator';
 var data = JSON.parse(localStorage.getItem('task'))
 var initialState = data ? data : []
 
 var myReducer = ( state = initialState, action ) => {
-    if(action.type === types.TASK_LIST ) {
-        return state
+    switch(action.type){
+        case types.TASK_LIST:
+            return state
+        case types.ADD_TASK:
+            var newTask = {
+                id : nextId(),
+                name : action.task.name,
+                status : action.task.status
+            }
+            state.push(newTask);
+            localStorage.setItem('task',JSON.stringify(state))
+            return state
+        default : return state;
     }
-    return state
 }  
 export default myReducer;
