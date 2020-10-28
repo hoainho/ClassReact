@@ -7,7 +7,9 @@ import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import myReducer from './reducers/index';
 import { Provider } from 'react-redux';
-const todo = createStore(myReducer);
+const todo = createStore(myReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  );
 ReactDOM.render(  
   <Provider store={ todo }>
     <React.StrictMode>

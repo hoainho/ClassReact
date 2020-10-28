@@ -1,21 +1,23 @@
 import React,{ Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../action/index';
 
-export default class TaskItem extends Component {
+class TaskItem extends Component {
   onUpdate = () =>{
-    this.props.onUpdate(this.props.item.id);
+    this.props.onUpdateStatus(this.props.item.id);
   }
-  onDelete = () =>{
-    this.props.onDelete(this.props.item.id);
-  }
-  onFix = () => {
-    this.props.onFix(this.props.item);
-  }
+  // onDelete = () =>{
+  //   this.props.onDelete(this.props.item.id);
+  // }
+  // onFix = () => {
+  //   this.props.onFix(this.props.item);
+  // }
   render(){
-    var { item, index } = this.props;
+    var { item , index} = this.props;
     return (
         <tr className="text-center">
             <td className="lh-3">{ index + 1 }</td>
-            <td className="lh-3">{ item.name }</td>
+            <td className="lh-3">{ this.props.item.name }</td>
             <td className="text-center lh-3">
                 <span className={ item.status === true ? 'label label-success ' : 'label label-warning '}
                       onClick = { this.onUpdate }
@@ -31,3 +33,15 @@ export default class TaskItem extends Component {
 }
 
 
+const mapitemtoProps = state => {
+  return {
+  }
+}
+const mapActToProps = (dispatch,props) => {
+  return {
+      onUpdateStatus : (id) => {
+          dispatch(actions.onUpdateStatus(id))
+      }
+  }
+}
+export default connect(mapitemtoProps,mapActToProps)(TaskItem)

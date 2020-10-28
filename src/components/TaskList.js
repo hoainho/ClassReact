@@ -28,8 +28,7 @@ class TaskList extends Component {
       var elmTask = items.map( (item,index) => {
        return <TaskItem key={ item.id } 
                         index={ index } 
-                        item= { item } 
-                        onUpdate = { this.props.onUpdate } 
+                        item = { item }
                         onDelete = { this.props.onDelete }
                         onFix = { this.props.onFix }/>
       })
@@ -69,7 +68,7 @@ class TaskList extends Component {
     );
   }
 }
-const mapDatatoProps = (state) => {
+const mapDatatoProps = state => {
     return {
         items : state.tasks
     }
