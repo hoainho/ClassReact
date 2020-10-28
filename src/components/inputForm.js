@@ -21,7 +21,6 @@ import * as actions from '../action/index';
         })
       }
     }
-    
     onHandleChange =(event) => {
         var target = event.target;
         var value = target.value;
@@ -33,9 +32,7 @@ import * as actions from '../action/index';
           [name] : value
         })  
       }
-    onCloseForm =() => {
-      this.props.onCloseForm();
-    }
+    
     onClear = () => {
       this.setState({
         name : '',
@@ -46,7 +43,7 @@ import * as actions from '../action/index';
         event.preventDefault();
         this.props.addTask(this.state);
         this.onClear();
-        this.onCloseForm();
+        this.props.onCloseForm();
     }
   render(){
     var { onCloseForm } =  this.props
@@ -82,14 +79,16 @@ import * as actions from '../action/index';
 
 const getState = state => {
   return {
-    
+    isDisplayForm : state.isDisplayForm
   }
 }
 const getAction = ( dispatch,props ) => {
   return {
     addTask : (task) => {
         dispatch(actions.addTask(task))
-      
+    },
+    onCloseForm : () => {
+      dispatch(actions.onCloseForm())
     }
   }
 }
