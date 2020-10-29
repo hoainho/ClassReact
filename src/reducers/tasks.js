@@ -22,7 +22,11 @@ var myReducer = ( state = initialState, action ) => {
             var id = action.id
             console.log(state);
             var index = _.findIndex(state, (item) => { return item.id === id})
-            state[index].status = !state[index].status
+            state[index] = {
+                ...state[index],
+                status : !state[index].status
+            }
+
             localStorage.setItem('task',JSON.stringify(state))
             return [...state]
         default : 
