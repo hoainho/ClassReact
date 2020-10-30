@@ -26,3 +26,9 @@ export const onUpdateStatus = id => {
         id
     }
 }
+export const onDelete = id =>{
+    return {
+        type : types.DELETE,
+        id
+    }
+}

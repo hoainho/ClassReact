@@ -6,9 +6,9 @@ class TaskItem extends Component {
   onUpdate = () =>{
     this.props.onUpdateStatus(this.props.item.id);
   }
-  // onDelete = () =>{
-  //   this.props.onDelete(this.props.item.id);
-  // }
+  onDelete = () =>{
+    this.props.onDelete(this.props.item.id);
+  }
   // onFix = () => {
   //   this.props.onFix(this.props.item);
   // }
@@ -41,7 +41,10 @@ const mapActToProps = (dispatch,props) => {
   return {
       onUpdateStatus : (id) => {
           dispatch(actions.onUpdateStatus(id))
-      }
+      },
+      onDelete : (id) => {
+        dispatch(actions.onDelete(id))
+    }
   }
 }
 export default connect(mapitemtoProps,mapActToProps)(TaskItem)
