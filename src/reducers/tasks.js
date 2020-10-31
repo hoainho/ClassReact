@@ -21,10 +21,12 @@ var myReducer = ( state = initialState, action ) => {
         case types.UPDATE_STATUS :
             var id = action.id
             var index = _.findIndex(state, (item) => { return item.id === id})
+            console.log(state[index]);
             state[index] = { 
-                status : !state[index].status
+                id : state[index].id,
+                name : state[index].name,
+                status : !state[index].status   
             }
-
             localStorage.setItem('task',JSON.stringify(state))
             return [...state]
         case types.DELETE : 
