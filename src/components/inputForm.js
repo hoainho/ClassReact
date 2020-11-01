@@ -46,8 +46,9 @@ import * as actions from '../action/index';
         this.props.onCloseForm();
     }
   render(){
-    var { onCloseForm } =  this.props
+    var { onCloseForm,isDisplayForm } =  this.props
     var { id } = this.state
+    if(!isDisplayForm) return '';
     return (
         <div className="panel panel-primary">
             <div className="panel-heading ">

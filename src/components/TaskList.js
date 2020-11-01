@@ -29,7 +29,7 @@ class TaskList extends Component {
        return <TaskItem key={ item.id } 
                         index={ index } 
                         item = { item }
-                        onFix = { this.props.onFix }/>
+                        />
       })
     return (
         

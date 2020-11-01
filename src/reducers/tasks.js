@@ -30,9 +30,9 @@ var myReducer = ( state = initialState, action ) => {
             localStorage.setItem('task',JSON.stringify(state))
             return [...state]
         case types.DELETE : 
-            var id = action.id
-            var index = _.findIndex(state, (item) => { return item.id === id })
-            state.splice(index,1)
+            var idDelete = action.id
+            var indexDelete = _.findIndex(state, (item) => { return item.id === idDelete })
+            state.splice(indexDelete,1)
             localStorage.setItem('task',JSON.stringify(state))
             return [...state]
         default : 

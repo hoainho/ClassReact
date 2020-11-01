@@ -121,11 +121,7 @@ class App extends Component {
     //       if( prev.status === true ) { return -sortValue }
     //       else{ return sortValue }
     //     })
-    // }
-    var elmInputForm = isDisplayForm  ? <InputForm  onSubmit = { this.onSubmit }
-                                                    onFill = { taskEditting }
-                                                  />  
-                                      : ''
+    // }   
       
     return (
       <div className="App">
@@ -135,7 +131,7 @@ class App extends Component {
             </div>
             <div className="row">
               <div className={ isDisplayForm === true ? "col-xs-4 col-sm-4 col-md-4 col-lg-4" : "display-none"}>
-                {elmInputForm}
+              <InputForm  onSubmit = { this.onSubmit } onFill = { taskEditting }/>  
               </div>
               <div className={ isDisplayForm === true ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
                 <button type="button" className="btn btn-primary mr-5"  onClick={ this.onToggleForm}>
@@ -164,9 +160,6 @@ const mapToActions = (dispatch,props) =>{
     return {
       onToggleForm : () => {
         dispatch(actions.onToggleForm())
-      },
-      onCloseForm : () => {
-        dispatch(actions.onCloseForm())
       }
     }
 }

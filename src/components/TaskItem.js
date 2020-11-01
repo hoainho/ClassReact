@@ -9,9 +9,9 @@ class TaskItem extends Component {
   onDelete = () =>{
     this.props.onDelete(this.props.item.id);
   }
-  // onFix = () => {
-  //   this.props.onFix(this.props.item);
-  // }
+  onFix = () => {
+    this.props.onFix(this.props.item);
+  }
   render(){
     var { item , index} = this.props;
     return (
