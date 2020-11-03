@@ -1,7 +1,6 @@
 import React,{ Component } from 'react';
 import _ from 'lodash';
 import './App.css';
-import nextId from 'react-id-generator';
 import { connect } from 'react-redux'
 import InputForm from './components/inputForm';
 import Control from './components/Control';
@@ -12,7 +11,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      taskEditting : null,
       filter : {
         name : '',
         status : 0
@@ -22,40 +20,11 @@ class App extends Component {
       sortValue : 1
     }
   }
- 
+ //redux
   onToggleForm = () => {
     this.props.onToggleForm()
   }
-  onSubmit = (data) => {
-    var { task } = this.state
-      if ( data.id === '' ){
-        data.id = nextId();
-        task.forEach((task) => {
-          if(task.id === data.id){
-            data.id = nextId();
-          }
-          });
-         task.push(data)
-      }else{
-          let index = _.findIndex(task, function(task){ return task.id === data.id});
-          task[index] = data
-      }
-      this.setState({
-        ...this.state,
-        task,
-      })
-      localStorage.setItem('task',JSON.stringify(task));
-  }
-
-  onDelete = (id) =>{
-    var { task } = this.state
-    var index = _.findIndex(task ,function(item){ return item.id === id})
-    task.splice(index,1);
-    this.setState({
-      task  
-    })
-    localStorage.setItem('task',JSON.stringify(task))
-  }
+ //react
   onFix = (data) =>{
     var { task } = this.state
     var index = _.findIndex(task , function(task) { return task.id === data.id; }); //find Index
@@ -88,7 +57,7 @@ class App extends Component {
     })
   }
   render(){
-    var {  taskEditting , sortBy,sortValue} = this.state
+    var {  sortBy,sortValue} = this.state
     var { isDisplayForm } = this.props // state from reducers
     // if(filter){
     //   if(filter.name){
@@ -130,17 +99,15 @@ class App extends Component {
               <hr/><h1> MANAGEMENT TASK</h1><hr/>
             </div>
             <div className="row">
-              <div className={ isDisplayForm === true ? "col-xs-4 col-sm-4 col-md-4 col-lg-4" : "display-none"}>
-              <InputForm  onSubmit = { this.onSubmit } onFill = { taskEditting }/>  
-              </div>
+                <InputForm  />  
               <div className={ isDisplayForm === true ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
                 <button type="button" className="btn btn-primary mr-5"  onClick={ this.onToggleForm}>
                     <span className="fa fa-plus-square mr-5"/>
                       Add Task
                 </button>
                 <Control onSearch = {this.onSearch} onSort = { this.onSort } sortBy = { sortBy } sortValue ={ sortValue }/>
-                <div className="row">
-                    <TaskList onDelete = { this.onDelete } onFix = { this.onFix } onFilter = { this.onFilter }/>
+                <div className="row ml-0">
+                    <TaskList onFix = { this.onFix } onFilter = { this.onFilter }/>
                 </div>
               </div>
                   

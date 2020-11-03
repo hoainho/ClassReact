@@ -21,7 +21,6 @@ var myReducer = ( state = initialState, action ) => {
         case types.UPDATE_STATUS :
             var id = action.id
             var index = _.findIndex(state, (item) => { return item.id === id})
-            console.log(state[index]);
             state[index] = { 
                 id : state[index].id,
                 name : state[index].name,

@@ -10,7 +10,8 @@ class TaskItem extends Component {
     this.props.onDelete(this.props.item.id);
   }
   onFix = () => {
-    this.props.onFix(this.props.item);
+    this.props.onToggle();
+    this.props.onUpdateData(this.props.item);
   }
   render(){
     var { item , index} = this.props;
@@ -35,6 +36,7 @@ class TaskItem extends Component {
 
 const mapitemtoProps = state => {
   return {
+    state
   }
 }
 const mapActToProps = (dispatch,props) => {
@@ -44,7 +46,13 @@ const mapActToProps = (dispatch,props) => {
       },
       onDelete : (id) => {
         dispatch(actions.onDelete(id))
-    }
+      },
+      onToggle : () => {
+        dispatch(actions.onToggleForm())
+      },
+      onUpdateData : task => {
+        dispatch(actions.onUpdateData(task))
+      }
   }
 }
 export default connect(mapitemtoProps,mapActToProps)(TaskItem)

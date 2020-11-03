@@ -3,23 +3,23 @@ import { connect } from 'react-redux'
 import * as actions from '../action/index';
 
  class inputForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state =  {
-            id : '',
-            name : '',
-            status : false
-            }
-    }
-    
+   constructor(props) {
+     super(props);
+     this.state = {
+       id : '',
+       name : '',
+       status: false
+     }
+   }
     componentWillMount() {
-      if(this.props.onFill){
+      if(this.props.updateTask && this.props.updateTask.id !== null){
         this.setState({
-          id : this.props.onFill.id,
-          name : this.props.onFill.name,
-          status : this.props.onFill.status
+          id : this.props.updateTask.id,
+          name : this.props.updateTask.name,
+          status : this.props.updateTask.status
         })
       }
+      this.onClear();
     }
     onHandleChange =(event) => {
         var target = event.target;
@@ -28,9 +28,10 @@ import * as actions from '../action/index';
         if(name === 'status'){
           value = target.value === 'true' ? true : false
         }
-        this.setState({
+         this.setState({
           [name] : value
-        })  
+         })
+        
       }
     
     onClear = () => {
@@ -46,11 +47,12 @@ import * as actions from '../action/index';
         this.props.onCloseForm();
     }
   render(){
-    var { onCloseForm,isDisplayForm } =  this.props
+    var { onCloseForm, isDisplayForm } =  this.props
     var { id } = this.state
+    console.log(this.state);
     if(!isDisplayForm) return '';
     return (
-        <div className="panel panel-primary">
+        <div className="panel panel-primary col-xs-4 col-sm-4 col-md-4 col-lg-4 px-0">
             <div className="panel-heading ">
                 <h3 className="panel-title w-100">{id === '' ? "input Form" : "Update Form"}
                     <span className="far fa-times-circle button-space" onClick={ onCloseForm }></span>
@@ -80,7 +82,9 @@ import * as actions from '../action/index';
 
 const getState = state => {
   return {
-    isDisplayForm : state.isDisplayForm
+    isDisplayForm : state.isDisplayForm,
+    task : state.tasks,
+    updateTask : state.updateTask
   }
 }
 const getAction = ( dispatch,props ) => {
@@ -90,6 +94,9 @@ const getAction = ( dispatch,props ) => {
     },
     onCloseForm : () => {
       dispatch(actions.onCloseForm())
+    },
+    onUpdateData : task => {
+      dispatch(actions.onUpdateData(task))
     }
   }
 }

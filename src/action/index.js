@@ -4,7 +4,7 @@ export const status = () => {
         type : types.TOGGLE_STATUS
     }
 }
-export const addTask = (task) => {
+export const addTask = task => {
     return {
         type : types.ADD_TASK,
         task
@@ -30,5 +30,11 @@ export const onDelete = id =>{
     return {
         type : types.DELETE,
         id
+    }
+}
+export const onUpdateData  = task =>{
+    return {
+        type : types.UPDATE_DATA,
+        task
     }
 }

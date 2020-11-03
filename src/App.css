@@ -18,6 +18,12 @@
 .mb-5{
   margin-bottom: 5px !important;
 }
+.ml-0{
+  margin-left: 0 !important;
+}
+.px-0 {
+  padding: 0!important;
+}
 .align-center{
   align-items: center !important;
 }
