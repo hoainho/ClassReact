@@ -20,6 +20,11 @@ export const onCloseForm = () => {
         type : types.CLOSE_FORM
     }
 }
+export const onOpenForm = () => {
+    return {
+        type : types.OPEN_FROM
+    }
+}
 export const onUpdateStatus = id => {
     return {
         type : types.UPDATE_STATUS,

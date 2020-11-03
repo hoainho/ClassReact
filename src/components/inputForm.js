@@ -12,15 +12,26 @@ import * as actions from '../action/index';
      }
    }
     componentWillMount() {
-      if(this.props.updateTask && this.props.updateTask.id !== null){
+      if(this.props.taskEditing && this.props.taskEditing.id !== null){
         this.setState({
-          id : this.props.updateTask.id,
-          name : this.props.updateTask.name,
-          status : this.props.updateTask.status
+          id : this.props.taskEditing.id,
+          name : this.props.taskEditing.name,
+          status : this.props.taskEditing.status
         })
       }
       this.onClear();
     }
+    componentWillReceiveProps(nextProps) {
+      console.log(nextProps.taskEditing);
+      if(nextProps && nextProps.taskEditing){
+        this.setState({
+          id : nextProps.taskEditing.id,
+          name : nextProps.taskEditing.name,
+          status : nextProps.taskEditing.status
+        })
+      }
+    }
+    
     onHandleChange =(event) => {
         var target = event.target;
         var value = target.value;
@@ -49,7 +60,6 @@ import * as actions from '../action/index';
   render(){
     var { onCloseForm, isDisplayForm } =  this.props
     var { id } = this.state
-    console.log(this.state);
     if(!isDisplayForm) return '';
     return (
         <div className="panel panel-primary col-xs-4 col-sm-4 col-md-4 col-lg-4 px-0">
@@ -84,7 +94,7 @@ const getState = state => {
   return {
     isDisplayForm : state.isDisplayForm,
     task : state.tasks,
-    updateTask : state.updateTask
+    taskEditing : state.updateTask
   }
 }
 const getAction = ( dispatch,props ) => {

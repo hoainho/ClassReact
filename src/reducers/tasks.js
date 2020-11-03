@@ -10,12 +10,18 @@ var myReducer = ( state = initialState, action ) => {
             return state
             
         case types.ADD_TASK:
-            var newTask = {
-                id : shortid.generate(),
+            var task = {
+                id : action.task.id,
                 name : action.task.name,
                 status : action.task.status
+                }
+            if(!task.id){
+                task.id = shortid.generate();
+                state.push(task);
+            }else{
+                var indexTask = _.findIndex(state, (item) => { return item.id === task.id})
+                state[indexTask] = task
             }
-            state.push(newTask)
             localStorage.setItem('task',JSON.stringify(state))
             return [...state]
         case types.UPDATE_STATUS :

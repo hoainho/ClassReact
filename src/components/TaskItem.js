@@ -10,7 +10,7 @@ class TaskItem extends Component {
     this.props.onDelete(this.props.item.id);
   }
   onFix = () => {
-    this.props.onToggle();
+    this.props.onOpenForm();
     this.props.onUpdateData(this.props.item);
   }
   render(){
@@ -46,6 +46,9 @@ const mapActToProps = (dispatch,props) => {
       },
       onDelete : (id) => {
         dispatch(actions.onDelete(id))
+      },
+      onOpenForm : () => {
+        dispatch(actions.onOpenForm())
       },
       onToggle : () => {
         dispatch(actions.onToggleForm())
