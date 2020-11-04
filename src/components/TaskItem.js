@@ -9,7 +9,7 @@ class TaskItem extends Component {
   onDelete = () =>{
     this.props.onDelete(this.props.item.id);
   }
-  onFix = () => {
+  onToggleForm = () => {
     this.props.onOpenForm();
     this.props.onUpdateData(this.props.item);
   }
@@ -25,7 +25,7 @@ class TaskItem extends Component {
                 >{ item.status === true ? 'Active' : 'InActive'}</span>
             </td>
             <td className="lh-3 text-center">
-                <button type="button" className="btn btn-success mr-5" onClick={ this.onFix }>Edit</button>
+                <button type="button" className="btn btn-success mr-5" onClick={ this.onToggleForm }>Edit</button>
                 <button type="button" className="btn btn-warning" onClick={ this.onDelete }>Delete</button>
             </td>
         </tr>
@@ -36,7 +36,7 @@ class TaskItem extends Component {
 
 const mapitemtoProps = state => {
   return {
-    state
+    
   }
 }
 const mapActToProps = (dispatch,props) => {
@@ -56,6 +56,7 @@ const mapActToProps = (dispatch,props) => {
       onUpdateData : task => {
         dispatch(actions.onUpdateData(task))
       }
+      
   }
 }
 export default connect(mapitemtoProps,mapActToProps)(TaskItem)

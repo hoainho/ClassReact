@@ -1,5 +1,4 @@
 import React,{ Component } from 'react';
-import _ from 'lodash';
 import './App.css';
 import { connect } from 'react-redux'
 import InputForm from './components/inputForm';
@@ -22,18 +21,17 @@ class App extends Component {
   }
  //redux
   onToggleForm = () => {
-    this.props.onToggleForm()
-  }
- //react
-  onFix = (data) =>{
-    var { task } = this.state
-    var index = _.findIndex(task , function(task) { return task.id === data.id; }); //find Index
-    var taskEditting = task[index];
-    this.setState({
-      ...this.state,
-      taskEditting,
+    var { taskEditing } = this.props;
+    if(taskEditing && taskEditing.id !== null){
+      this.props.onOpenForm();
+    }else{
+      this.props.onToggleForm();
+    }
+    this.props.onClear({ // onUpdate , call function onUpdate so that state be update into null
+      id : '',
+      name : '',
+      status : false
     })
-    this.onToggleForm();
   }
   onFilter = (filterName,filterStatus) => {
     filterStatus = parseInt(filterStatus,10)
@@ -105,9 +103,9 @@ class App extends Component {
                     <span className="fa fa-plus-square mr-5"/>
                       Add Task
                 </button>
-                <Control onSearch = {this.onSearch} onSort = { this.onSort } sortBy = { sortBy } sortValue ={ sortValue }/>
+                <Control onSearch = {this.onSearch} sortBy = { sortBy } sortValue ={ sortValue }/>
                 <div className="row ml-0">
-                    <TaskList onFix = { this.onFix } onFilter = { this.onFilter }/>
+                    <TaskList onFilter = { this.onFilter }/>
                 </div>
               </div>
                   
@@ -120,13 +118,20 @@ class App extends Component {
 }
 const mapToProps = state =>{
   return{
-  isDisplayForm : state.isDisplayForm
+  isDisplayForm : state.isDisplayForm,
+  taskEditing : state.updateTask
   }
 }
 const mapToActions = (dispatch,props) =>{
     return {
       onToggleForm : () => {
         dispatch(actions.onToggleForm())
+      },
+      onClear : task => {
+        dispatch(actions.onUpdateData(task))
+      },
+      onOpenForm : () => {
+        dispatch(actions.onOpenForm())
       }
     }
 }

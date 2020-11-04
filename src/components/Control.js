@@ -1,7 +1,7 @@
 import React,{ Component } from 'react';
-
-
-export default class TaskForm extends Component {
+import {connect} from 'react-redux';
+import * as actions from '../action/index';
+class TaskForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -52,5 +52,14 @@ export default class TaskForm extends Component {
     );
   }
 }
-
-
+const mapToState = state => {
+    return state
+}
+const mapToAction = (dispatch, props) => {
+    return {
+        onSort : (name,value) => {
+            dispatch(actions.onFilterData(name,value))
+        }
+    }
+}
+export default connect(mapToState,mapToAction)(TaskForm)

@@ -22,7 +22,6 @@ import * as actions from '../action/index';
       this.onClear();
     }
     componentWillReceiveProps(nextProps) {
-      console.log(nextProps.taskEditing);
       if(nextProps && nextProps.taskEditing){
         this.setState({
           id : nextProps.taskEditing.id,

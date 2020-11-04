@@ -20,6 +20,12 @@ export const onCloseForm = () => {
         type : types.CLOSE_FORM
     }
 }
+export const onClearForm = (task) => {
+    return {
+        type : types.CLEAR_FORM,
+        task
+    }
+}
 export const onOpenForm = () => {
     return {
         type : types.OPEN_FROM
@@ -41,5 +47,12 @@ export const onUpdateData  = task =>{
     return {
         type : types.UPDATE_DATA,
         task
+    }
+}
+export const onFilterData  = (name,value) =>{
+    return {
+        type : types.FILTER_DATA,
+        name,
+        value
     }
 }

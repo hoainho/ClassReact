@@ -8,7 +8,6 @@ var myReducer = ( state = initialState, action ) => {
     switch(action.type){
         case types.TASK_LIST:
             return state
-            
         case types.ADD_TASK:
             var task = {
                 id : action.task.id,
@@ -39,6 +38,20 @@ var myReducer = ( state = initialState, action ) => {
             var indexDelete = _.findIndex(state, (item) => { return item.id === idDelete })
             state.splice(indexDelete,1)
             localStorage.setItem('task',JSON.stringify(state))
+            return [...state]
+        case types.FILTER_DATA :
+            if (action.name === 'name') {
+                state.sort((prev,after) => {
+                  if( prev.name.toLowerCase() > after.name.toLowerCase() ) { return action.value }
+                  else if( prev.name.toLowerCase() < after.name.toLowerCase() ) { return -action.value }
+                  else return 0 
+                })
+            }else{
+                state.sort((prev,after) => {
+                  if( prev.status === true ) { return -action.value }
+                  else{ return action.value }
+                })
+            } 
             return [...state]
         default : 
             return state;
