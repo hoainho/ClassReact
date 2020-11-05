@@ -18,7 +18,7 @@ class TaskItem extends Component {
     return (
         <tr className="text-center">
             <td className="lh-3">{ index + 1 }</td>
-            <td className="lh-3">{ this.props.item.name }</td>
+            <td className="lh-3">{ item.name }</td>
             <td className="text-center lh-3">
                 <span className={ item.status === true ? 'label label-success ' : 'label label-warning '}
                       onClick = { this.onUpdate }
@@ -36,7 +36,6 @@ class TaskItem extends Component {
 
 const mapitemtoProps = state => {
   return {
-    
   }
 }
 const mapActToProps = (dispatch,props) => {

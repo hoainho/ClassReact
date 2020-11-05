@@ -53,6 +53,24 @@ var myReducer = ( state = initialState, action ) => {
                 })
             } 
             return [...state]
+        case types.SORT :
+           if(action){
+              if(action.name){
+                 state = state.filter( (item) => {
+                  return item.name.toLowerCase().indexOf(action.name) !== -1;
+                });
+              }
+              console.log(state);
+                state = state.filter( (item) => {
+                  if (action.value === 0) { return item }
+                  else {
+                    return item.status === ( action.value === 1 ? true : false )
+                  }
+                })
+            }
+            console.log(state);
+
+            return [...state]
         default : 
             return state;
     }

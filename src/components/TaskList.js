@@ -1,5 +1,6 @@
 import React,{ Component } from 'react';
 import TaskItem from './TaskItem';
+import * as actions from '../action/index';
 import { connect } from 'react-redux';
 class TaskList extends Component {
     constructor(props) {
@@ -13,7 +14,7 @@ class TaskList extends Component {
         var target = event.target;
         var value = target.value;
         var name = target.name;
-        this.props.onFilter(
+        this.props.onSort(
             name === 'filterName' ? value : this.state.filterName,
             name === 'filterStatus' ? value : this.state.filterStatus
         )
@@ -72,4 +73,11 @@ const mapDatatoProps = state => {
         items : state.tasks
     }
 }
-export default connect(mapDatatoProps,null)(TaskList);
+const mapActionToProps = (dispatch,props) => {
+    return {
+        onSort : (name,status) => {
+            dispatch(actions.onSortData(name,status))
+        }
+    }
+}
+export default connect(mapDatatoProps,mapActionToProps)(TaskList);

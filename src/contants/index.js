@@ -9,3 +9,4 @@ export const UPDATE_STATUS = 'UPDATE_STATUS';
 export const DELETE = 'DELETE';
 export const UPDATE_DATA = 'UPDATE_DATA';
 export const FILTER_DATA = 'FILTER_DATA';
+export const SORT = 'SORT';

@@ -77,18 +77,7 @@ class App extends Component {
     //     return item.name.toLowerCase().indexOf(keyWord) !== -1
     //   })
     // }
-    // if (sortBy === 'name') {
-    //     task.sort((prev,after) => {
-    //       if( prev.name > after.name ) { return sortValue }
-    //       else if( prev.name < after.name ) { return -sortValue }
-    //       else return 0 
-    //     })
-    // }else{
-    //     task.sort((prev,after) => {
-    //       if( prev.status === true ) { return -sortValue }
-    //       else{ return sortValue }
-    //     })
-    // }   
+  
       
     return (
       <div className="App">
@@ -105,7 +94,7 @@ class App extends Component {
                 </button>
                 <Control onSearch = {this.onSearch} sortBy = { sortBy } sortValue ={ sortValue }/>
                 <div className="row ml-0">
-                    <TaskList onFilter = { this.onFilter }/>
+                    <TaskList />
                 </div>
               </div>
                   

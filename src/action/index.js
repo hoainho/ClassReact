@@ -56,3 +56,10 @@ export const onFilterData  = (name,value) =>{
         value
     }
 }
+export const onSortData  = (name,status) =>{
+    return {
+        type : types.SORT,
+        name,
+        status
+    }
+}
