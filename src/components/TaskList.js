@@ -1,7 +1,7 @@
 import React,{ Component } from 'react';
 import TaskItem from './TaskItem';
 import * as actions from '../action/index';
-import { connect } from 'react-redux';
+import { connect } from 'react-redux';  
 class TaskList extends Component {
     constructor(props) {
         super(props);
@@ -14,13 +14,15 @@ class TaskList extends Component {
         var target = event.target;
         var value = target.value;
         var name = target.name;
-        this.props.onSort(
-            name === 'filterName' ? value : this.state.filterName,
-            name === 'filterStatus' ? value : this.state.filterStatus
-        )
         this.setState({
             [name] : value
         })
+        var valueConvert = name === 'filterName' ? value.toLowerCase() : Number(value)
+        this.props.onSort(
+            name,
+            valueConvert
+        )
+        
     }
     render(){
       var { filterName } = this.state
@@ -75,8 +77,8 @@ const mapDatatoProps = state => {
 }
 const mapActionToProps = (dispatch,props) => {
     return {
-        onSort : (name,status) => {
-            dispatch(actions.onSortData(name,status))
+        onSort : (name,value) => {
+            dispatch(actions.onSortData(name,value))
         }
     }
 }
