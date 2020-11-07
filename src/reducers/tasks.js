@@ -57,7 +57,7 @@ var myReducer = ( state = initialState, action ) => {
             console.log(action.value);
             if(action.name){
                 if(action.name === 'filterName'){
-                 state = state.filter( (item) => {
+                state = state.filter( (item) => {
                   if(action.value !== null & action.value !== ""){
                     return item.name.toLowerCase().indexOf(action.value) !== -1;
                   }return item
@@ -65,14 +65,21 @@ var myReducer = ( state = initialState, action ) => {
               }
               else{
                 if(action.name === 'filterStatus'){
-                state = state.filter( (item) => {
-                    if(action.value === 0){ return item}
-                    else{ return item.status === ( action.value === 1 ? true : false) }
-                    })
+                    state = JSON.parse(localStorage.getItem('task'))
+                    if(action.value === 0){
+                        state = JSON.parse(localStorage.getItem('task'))
+                    }
+                    else{
+                        state = state.filter( (item) => {
+                            return item.status === (action.value === 1 ? true : false) 
+                            })
+                    }
+                    
                  }
               }
+              
             }
-            return state
+            return [...state]
         default : 
             return state;
     }
