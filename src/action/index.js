@@ -63,3 +63,10 @@ export const onSortData  = (name,value) =>{
         value
     }
 }
+export const onSearchData  = (name,value) =>{
+    return {
+        type : types.SEARCH,
+        name,
+        value
+    }
+}
