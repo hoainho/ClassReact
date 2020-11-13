@@ -14,7 +14,6 @@ class App extends Component {
         name : '',
         status : 0
       },
-      keyWord : '',
       sortBy : 'name',
       sortValue : 1
     }
@@ -40,12 +39,6 @@ class App extends Component {
         name : filterName.toLowerCase(),
         status : filterStatus
       }
-    })
-  }
-  onSearch = (data) => {
-    console.log(data);
-    this.setState({
-      keyWord :data.toLowerCase(),
     })
   }
   onSort = (sortBy,sortValue) => {
@@ -92,7 +85,7 @@ class App extends Component {
                     <span className="fa fa-plus-square mr-5"/>
                       Add Task
                 </button>
-                <Control onSearch = {this.onSearch} sortBy = { sortBy } sortValue ={ sortValue }/>
+                <Control sortBy = { sortBy } sortValue ={ sortValue }/>
                 <div className="row ml-0">
                     <TaskList />
                 </div>

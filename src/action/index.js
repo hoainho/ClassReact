@@ -63,10 +63,9 @@ export const onSortData  = (name,value) =>{
         value
     }
 }
-export const onSearchData  = (name,value) =>{
+export const onSearchData  = (keyWord) =>{
     return {
         type : types.SEARCH,
-        name,
-        value
+        keyWord
     }
 }

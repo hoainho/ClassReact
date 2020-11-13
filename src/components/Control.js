@@ -19,6 +19,7 @@ class TaskForm extends Component {
         })
     }
     onSearch = () => {
+        console.log(this.state.keyWord);
         this.props.onSearch(this.state.keyWord)
     }
     onSort = (sortBy,sortValue) => {
@@ -64,6 +65,9 @@ const mapToAction = (dispatch, props) => {
     return {
         onSort : (name,value) => {
             dispatch(actions.onFilterData(name,value))
+        },
+        onSearch : (keyWord) => {
+            dispatch(actions.onSearchData(keyWord))
         }
     }
 }
