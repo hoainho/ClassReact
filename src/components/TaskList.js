@@ -17,23 +17,56 @@ class TaskList extends Component {
         this.setState({
             [name] : value
         })
-        var valueConvert = name === 'filterName' ? value.toLowerCase() : Number(value)
-        this.props.onSort(
+        var data = name === 'filterName' ? value.toLowerCase() : Number(value)
+        let item = {
             name,
-            valueConvert
-        )
+            data
+        } 
+        this.props.onSort( item )
         
     }
     render(){
       var { filterName } = this.state
       var { filterStatus } = this.state
-      var { items } = this.props
+      var { items, keyWord, task } = this.props
+        //search
+        if(keyWord){
+        items = items.filter( item => {
+            return item.name.toLowerCase().indexOf(keyWord.toLowerCase()) !== -1
+        })
+        }
+        // sort
+        console.log(task);
+        // if(task.name){
+        //     if(task.name === 'filterName'){
+        //     items = items.filter( (item) => {
+        //       if(task.value !== null & task.value !== ""){
+        //         return item.name.toLowerCase().indexOf(parseInt(task.value,10)) !== -1;
+        //       }
+        //     });
+        //   }
+        //   else{
+        //     if(task.name === 'filterStatus'){
+        //         if(task.value === 0){
+        //             return task 
+        //         }
+        //         else{
+        //             items = items.filter( (item) => {
+        //                 return item.status === (task.value === 1 ? true : false) 
+        //                 })
+        //         }
+                
+        //      }
+        //   }
+          
+        // }
       var elmTask = items.map( (item,index) => {
        return <TaskItem key={ item.id } 
                         index={ index } 
                         item = { item }
                         />
       })
+      
     return (
         
         <div className="panel panel-primary">
@@ -72,13 +105,15 @@ class TaskList extends Component {
 }
 const mapDatatoProps = state => {
     return {
-        items : state.tasks
+        items : state.tasks,
+        keyWord : state.searchTask,
+        task : state.filterTask
     }
 }
 const mapActionToProps = (dispatch,props) => {
     return {
-        onSort : (name,value) => {
-            dispatch(actions.onSortData(name,value))
+        onSort : (item) => {
+            dispatch(actions.onSortData(item))
         }
     }
 }

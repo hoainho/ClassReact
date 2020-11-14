@@ -5,7 +5,7 @@ var initialState ={};
 const myReducer = (state = initialState,action) => {
     switch(action.type){
         case types.UPDATE_DATA:
-        return action.task
+            return action.task
         //Default
         default : return state
     } 

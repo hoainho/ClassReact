@@ -19,7 +19,6 @@ class TaskForm extends Component {
         })
     }
     onSearch = () => {
-        console.log(this.state.keyWord);
         this.props.onSearch(this.state.keyWord)
     }
     onSort = (sortBy,sortValue) => {
@@ -31,6 +30,7 @@ class TaskForm extends Component {
     }
   render(){
       var {keyWord,filterBy,filterValue} = this.state
+      
     return (
         <div className="row mt-5 mb-5">
             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 search-control">
@@ -59,7 +59,7 @@ class TaskForm extends Component {
   }
 }
 const mapToState = state => {
-    return state
+    return {}
 }
 const mapToAction = (dispatch, props) => {
     return {

@@ -53,32 +53,8 @@ var myReducer = ( state = initialState, action ) => {
                 })
             } 
             return [...state]
-        case types.SORT :
-            if(action.name){
-                if(action.name === 'filterName'){
-                state = state.filter( (item) => {
-                  if(action.value !== null & action.value !== ""){
-                    return item.name.toLowerCase().indexOf(action.value) !== -1;
-                  }return item
-                });
-              }
-              else{
-                if(action.name === 'filterStatus'){
-                    state = JSON.parse(localStorage.getItem('task'))
-                    if(action.value === 0){
-                        state = JSON.parse(localStorage.getItem('task'))
-                    }
-                    else{
-                        state = state.filter( (item) => {
-                            return item.status === (action.value === 1 ? true : false) 
-                            })
-                    }
-                    
-                 }
-              }
-              
-            }
-            return [...state]
+        
+       
         default : 
             return state;
     }
