@@ -1,13 +1,13 @@
 import * as types from '../contants/index';
 var initialState = {
     name : '',
-    status : -1
+    status : 0
 }
 
 var myReducer = ( state = initialState, action ) => {
     switch(action.type){
         case types.SORT :
-            return action.item
+            return action.task
         default : 
             return state;
     }

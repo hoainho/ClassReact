@@ -14,15 +14,14 @@ class TaskList extends Component {
         var target = event.target;
         var value = target.value;
         var name = target.name;
+        var filter = {
+            name : name === 'filterName' ? value : this.state.filterName, 
+            status : name === 'filterStatus' ? parseInt(value,10) : parseInt(this.state.filterStatus,10)};
+        this.props.onSort( filter)
         this.setState({
             [name] : value
         })
-        var data = name === 'filterName' ? value.toLowerCase() : Number(value)
-        let item = {
-            name,
-            data
-        } 
-        this.props.onSort( item )
+        
         
     }
     render(){
@@ -37,29 +36,18 @@ class TaskList extends Component {
         }
         // sort
         console.log(task);
-        // if(task.name){
-        //     if(task.name === 'filterName'){
-        //     items = items.filter( (item) => {
-        //       if(task.value !== null & task.value !== ""){
-        //         return item.name.toLowerCase().indexOf(parseInt(task.value,10)) !== -1;
-        //       }
-        //     });
-        //   }
-        //   else{
-        //     if(task.name === 'filterStatus'){
-        //         if(task.value === 0){
-        //             return task 
-        //         }
-        //         else{
-        //             items = items.filter( (item) => {
-        //                 return item.status === (task.value === 1 ? true : false) 
-        //                 })
-        //         }
-                
-        //      }
-        //   }
-          
-        // }
+        if(task.name){
+                items = items.filter( (item) => {
+                return item.name.toLowerCase().indexOf(task.name) !== -1;
+                });
+        } 
+        items = items.filter( item => { 
+                if(task.status === 0){
+                    return item 
+                }else{
+                    return item.status === (task.status === 1 ? true : false) 
+                }
+        })   
       var elmTask = items.map( (item,index) => {
        return <TaskItem key={ item.id } 
                         index={ index } 
@@ -112,8 +100,8 @@ const mapDatatoProps = state => {
 }
 const mapActionToProps = (dispatch,props) => {
     return {
-        onSort : (item) => {
-            dispatch(actions.onSortData(item))
+        onSort : (task) => {
+            dispatch(actions.onSortData(task))
         }
     }
 }

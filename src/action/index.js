@@ -56,10 +56,10 @@ export const onFilterData  = (name,value) =>{
         value
     }
 }
-export const onSortData  = (item) =>{
+export const onSortData  = (task) =>{
     return {
         type : types.SORT,
-        item
+        task
     }
 }
 export const onSearchData  = keyWord =>{
